@@ -4,7 +4,7 @@ This is my submission for the coding challange for Atomic Objects Accelertor Pro
 
 What Strategy did I use?
 
-First, my program finds ALL avaliable empty slots surronding a white piece. Seeing that you MUST flank every turn, this seemed the safest route to go.
+First, my program finds ALL avaliable empty slots surronding a enemy piece. Seeing that you MUST flank every turn, this seemed the safest route to go.
 
 After finding all Empty slots, we check every slot if it has a leading ally piece, meaning if we place this piece, will we find a corrosponding piece on the other end to close the flank?
 
