@@ -1,0 +1,2 @@
+# othello-atomic-object
+ 
