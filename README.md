@@ -1,4 +1,4 @@
-# othello-atomic-object
+# othello-atomic-object || Python Solution
  
 This is my submission for the coding challange for Atomic Objects Accelertor Program, 2023
 
