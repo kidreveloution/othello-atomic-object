@@ -1,4 +1,6 @@
 # othello-atomic-object || Python Solution
+
+Note: I Used Python Pandas for this Project, if you dont have it, ``pip3 install pandas``
  
 This is my submission for the coding challange for Atomic Objects Accelertor Program, 2023
 
