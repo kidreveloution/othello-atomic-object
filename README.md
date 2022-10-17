@@ -20,3 +20,41 @@ Rule 3 and 4 where two strategies that I found many people argue on line, decide
 This is actually a feature, as this somewhat implements another strategy (Avoid putting slots on the 4x4 square from the center, also on line strategy)
 
 This was fun! Thank you for your consideration!
+-----------------------------------
+Update:
+
+After carefully analyzing different strategies, I have found the best combination of rules:
+
+Here is my testing
+
+----
+Othello Wins
+
+Aladdins is #1, Random
+Player 1 = 1 1 1 1
+Player 2 = 1 1 1 1
+
+Aladdin is #1 ,  Random + Secure Corners
+Player 1 = 1 1 1
+Player 2 = 1 1 1 1 1
+
+Aladdins is #1, gravitateAwayFromCenter + Secure Corners
+Player 1 = 1 1 1 1 1 1
+Player 2 = 1 1 1 1
+
+Aladdins is #1, gravitateToCenter + Secure Corners
+Player 1 = 1 1 1 1 1 1 1 1 1 1 1
+Player 2 = 1 1 1
+———————————————————————
+Aladdins is #2, Random
+Player 1 = 1 1 1 1 1 1
+Player 2 = 1 1 1
+
+Aladdin is #2, gravitateToCenter + Secure Corners:
+Player 1: 1 1
+Player 2: 1 1 1 1 1 1 1 1 
+----
+
+After doing this testing, I have decided to Apply 'gravitateToCenter' and 'Secure Corners' to both players
+
+

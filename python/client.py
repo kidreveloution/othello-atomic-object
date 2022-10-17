@@ -4,14 +4,11 @@ import math
 import sys
 import json
 import socket
-import random
 from random import choice
 import pandas as pd
 
-#Because of the way I am using dataframes, I can use the code just fine, but need to reverse the x,y all the way in the end because pandas DataFrame mirrors
-
-def bestMove(player,possibleMoves): #This function is the last chance to recieve a good Move. This diffrentiates on who goes first
-  corners = [[0,0],[7,7],[0,7],[7,0]] # First, we need to capture as many corners as we can, that is why if it is a corner, we capture it ASAP
+def secureCorners(possibleMoves): #Given all the possible Moves, if one of the 4 corners in the list, secure that corner First
+  corners = [[0,0],[7,7],[0,7],[7,0]] 
   if corners[0] in possibleMoves: 
     returnedAns = "[0,0]"
     return returnedAns
@@ -24,30 +21,43 @@ def bestMove(player,possibleMoves): #This function is the last chance to recieve
   if corners[3] in [possibleMoves]:
     returnedAns = "[0,7]"
     return returnedAns
+  
+def gravitateAwayFromCenter(possibleMoves): #This function finds which 'possibleMove' is farthest away from the center and returns it
+  center = [0,0]
+  returnedAns = possibleMoves[0]
+  tempDist = math.dist(possibleMoves[0],center)
+  for x in range(len(possibleMoves)):
+    if math.dist(possibleMoves[x],center)>tempDist: # Here, we avoid the center as much as possible
+      tempDist = math.dist(possibleMoves[0],center)
+      returnedAns = possibleMoves[x]
+  returnedAns = "["+str(returnedAns[1])+","+str(returnedAns[0])+"]" #Formatting the answer
+  return returnedAns
 
+def gravitateToCenter(possibleMoves): #This function finds which 'possibleMove' is closest to the center, and returns it
+  center = [0,0]
+  returnedAns = possibleMoves[0]
+  tempDist = math.dist(possibleMoves[0],center)
+  for x in range(len(possibleMoves)):
+    if math.dist(possibleMoves[x],center)<tempDist: # Here, we avoid the center as much as possible
+      tempDist = math.dist(possibleMoves[0],center)
+      returnedAns = possibleMoves[x]
+  returnedAns = "["+str(returnedAns[1])+","+str(returnedAns[0])+"]" #Formatting the answer
+  return returnedAns
 
-
-
-  if player == 1: #After playing random, player 1 has initial advantage, playind ranom pieaces works for player 1
-    randomize = random.randint(0,len(possibleMoves)-1)
-    returnedAns = "["+str(possibleMoves[randomize][1])+","+str(possibleMoves[randomize][0])+"]"
+def bestMove(player,possibleMoves): #Given the player, and all the 'possibleMoves' find the 'best' move to make
+  
+  returnedAns = secureCorners(possibleMoves) #We should ALWAYS aim to secure any of the 4 corners when we can
+  if returnedAns != None:
     return returnedAns
 
-  if player == 2: # There are 2 strategies player 2 can do boost their chances when playing 2nd
-    center = [0,0]
-    returnedAns = possibleMoves[0]
-    ans = math.dist(possibleMoves[0],center)  #Both of these strategies rely on distance from the center, and the edges. So we start at initial
-    tempRandom = random.randint(0,1) #Since these strategies work in parellel (We need to avoid the square of death), we randomize using the 2
-    for x in range(len(possibleMoves)):
-      if tempRandom == 0: 
-        if math.dist(possibleMoves[x],center)>ans: # Here, we avoid the center as much as possible
-          returnedAns = possibleMoves[x]
-      else:
-        if math.dist(possibleMoves[x],center)<ans: #Here we approach the center as much as possible
-          returnedAns = possibleMoves[x]
-    returnedAns = "["+str(returnedAns[1])+","+str(returnedAns[0])+"]" #Formatting the answer
-  return(returnedAns)
+  if player == 1: 
+    returnedAns = gravitateToCenter(possibleMoves)
+    return returnedAns
 
+  if player == 2:
+    returnedAns = gravitateToCenter(possibleMoves)
+    return returnedAns
+    
 def findLeadingPiece(player,posName,ans,df): #After finding all the places where there are empty spaces, we now must find acceptable moves given we MUST flank every pieace
 
   #The way this works is, given the player(what pieaces we should be looking for)
@@ -212,7 +222,7 @@ def findEnemyPiece(df,player): #Here, we find ALL pieaces that our enemy has on 
 
 def get_move(player, board):
   df = pd.DataFrame(board)
-  print(df)
+  #print(df) <---Uncomment this to view the board in python Terminal
   if player ==1:
     move = findEnemyPiece(df,1) #Find all possible moves, starting at the enemy piece
     return bestMove(player,move) # find the BEST move given the pieces
@@ -226,7 +236,7 @@ def prepare_response(move):
   return response
 
 if __name__ == "__main__":
-  port = int(sys.argv[1]) if (len(sys.argv) > 1 and sys.argv[1]) else 1337
+  port = int(sys.argv[1]) if (len(sys.argv) > 1 and sys.argv[1]) else 1338
   host = sys.argv[2] if (len(sys.argv) > 2 and sys.argv[2]) else socket.gethostname()
 
   sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
