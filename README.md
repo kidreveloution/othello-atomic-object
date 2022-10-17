@@ -45,7 +45,9 @@ Player 2 = 1 1 1 1
 Aladdins is #1, gravitateToCenter + Secure Corners
 Player 1 = 1 1 1 1 1 1 1 1 1 1 1
 Player 2 = 1 1 1
+
 ———————————————————————
+
 Aladdins is #2, Random
 Player 1 = 1 1 1 1 1 1
 Player 2 = 1 1 1
@@ -53,6 +55,7 @@ Player 2 = 1 1 1
 Aladdin is #2, gravitateToCenter + Secure Corners:
 Player 1: 1 1
 Player 2: 1 1 1 1 1 1 1 1 
+
 ----
 
 After doing this testing, I have decided to Apply 'gravitateToCenter' and 'Secure Corners' to both players
